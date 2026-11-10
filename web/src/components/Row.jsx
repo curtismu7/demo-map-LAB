@@ -4,7 +4,7 @@ import { isWebLink } from "../lib/filter.js";
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 
-// One row of the map: a collapsible section (default open) with its app cards and its AI-DEMO2 page links.
+// One row of the map: a collapsible section (open by default; collapsed when it has more than LARGE_ROW apps, see lib/rowOpen.js) with its app cards and its AI-DEMO2 page links.
 export default function Row({ row, open, onToggle, filtering }) {
   const bodyId = `row-body-${row.id}`;
   const apps = row.shown;

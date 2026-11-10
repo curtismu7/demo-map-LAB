@@ -4,6 +4,7 @@ import { THEMES, applyTheme, savedTheme } from "./theme";
 import { filterRows } from "./lib/filter.js";
 import ShelfLink from "./components/ShelfLink.jsx";
 import Row from "./components/Row.jsx";
+import { isRowOpen } from "./lib/rowOpen.js";
 
 export const BANNER = {
   mock: "Mock: a made-up sample shelf (invented apps on .example hosts). Nothing is read from your demo shelf and nothing is fetched from the network. The AI-DEMO2 page links point at a placeholder address.",
@@ -19,7 +20,7 @@ export default function App() {
   const [switchError, setSwitchError] = React.useState("");
   const [theme, setTheme] = React.useState(savedTheme);
   const [query, setQuery] = React.useState("");
-  const [closed, setClosed] = React.useState({});    // row id -> true when collapsed; default open
+  const [closed, setClosed] = React.useState({});    // row id -> true when collapsed, false when opened; unset = the default (isRowOpen)
 
   React.useEffect(() => { applyTheme(theme); }, [theme]);
   React.useEffect(() => {
@@ -93,7 +94,7 @@ export default function App() {
         ) : map === undefined ? <p className="muted" data-testid="loading">Loading...</p>
           : (
             <div className="rows" data-testid="rows">
-              {rows.map((r) => <Row key={r.id} row={r} filtering={filtering} open={!closed[r.id]} onToggle={() => setClosed((c) => ({ ...c, [r.id]: !c[r.id] }))} />)}
+              {rows.map((r) => <Row key={r.id} row={r} filtering={filtering} open={isRowOpen(r, closed, filtering)} onToggle={() => setClosed((c) => ({ ...c, [r.id]: isRowOpen(r, c, filtering) }))} />)}
               {rows.length === 0 && <p className="muted" data-testid="no-match">Nothing matches the filter.</p>}
             </div>
           )}

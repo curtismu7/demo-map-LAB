@@ -1,0 +1,23 @@
+{
+  "name": "demo-map-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Demo Map: a one-page map of the demo family. Rows for the Personal Agent demo, the Digital Worker agent and each Ping product, each with the standalone apps that belong in it and the AI-DEMO2 pages for it. Mock shows a made-up sample shelf; Real reads the local demo shelf, read-only.",
+  "license": "MIT",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "start": "npm start -w server",
+    "build": "npm run build -w web",
+    "test": "npm test -w server && npm test -w web && node --test scripts/*.test.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "reset": "node scripts/reset.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
+  }
+}

@@ -1,0 +1,303 @@
+{
+  "schema": "demo-shelf/1",
+  "generatedAt": "2026-11-10T09:00:00.000Z",
+  "demos": [
+    {
+      "id": "sample-personal-agent-demo",
+      "name": "Sample Personal Agent",
+      "kind": "Demo",
+      "description": "A made-up personal agent that asks first, is told to sign in, then acts for the person. Invented for this sample.",
+      "tags": [
+        "simulated",
+        "agent-identity"
+      ],
+      "url": "http://sample-personal-agent-demo.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-personal-agent-demo/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-agent-connect",
+      "name": "Sample Agent Connect",
+      "kind": "Tool",
+      "description": "A made-up connector that lets a sample agent client reach a sample tool server. Invented for this sample.",
+      "tags": [
+        "simulated",
+        "mcp-security"
+      ],
+      "url": "http://sample-agent-connect.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-agent-connect/",
+      "status": {
+        "state": "down",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-digital-worker-demo",
+      "name": "Sample Worker",
+      "kind": "Demo",
+      "description": "A made-up autonomous worker that holds its own delegated identity and spends it across sample tools.",
+      "tags": [
+        "simulated",
+        "agent-controls"
+      ],
+      "url": "http://sample-digital-worker-demo.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-digital-worker-demo/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-worker-demo-audit",
+      "name": "Sample Worker Audit",
+      "kind": "Tester",
+      "description": "A made-up tester that scores whether every sample worker action left an audit record.",
+      "tags": [
+        "simulated",
+        "audit-observability"
+      ],
+      "url": "http://sample-worker-demo-audit.lab.example:7900",
+      "where": "installed",
+      "status": {
+        "state": "needs-setup",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-signin-lab",
+      "name": "Sample Sign-in Lab",
+      "kind": "Demo",
+      "description": "A made-up sign-in and MFA walk-through on a pretend identity platform.",
+      "tags": [
+        "pingone",
+        "sign-in-and-mfa",
+        "simulated"
+      ],
+      "url": "http://sample-signin-lab.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-signin-lab/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-flow-builder",
+      "name": "Sample Flow Builder",
+      "kind": "Tool",
+      "description": "A made-up low-code flow viewer for a pretend identity platform.",
+      "tags": [
+        "learning"
+      ],
+      "url": "http://sample-flow-builder.lab.example:7900",
+      "where": "installed",
+      "pingProducts": [
+        {
+          "product": "pingone",
+          "state": "ready"
+        }
+      ],
+      "status": {
+        "state": "down",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-token-exchange",
+      "name": "Sample Token Exchange",
+      "kind": "Demo",
+      "description": "A made-up token exchange between two pretend authorization servers.",
+      "tags": [
+        "pingfederate",
+        "token-exchange"
+      ],
+      "url": "http://sample-token-exchange.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-token-exchange/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-idjag-inspector",
+      "name": "Sample ID-JAG Inspector",
+      "kind": "Tester",
+      "description": "A made-up inspector that decodes a sample identity assertion grant and flags what is missing.",
+      "tags": [
+        "id-jag",
+        "oauth"
+      ],
+      "url": "http://sample-idjag-inspector.lab.example:7900",
+      "where": "installed"
+    },
+    {
+      "id": "sample-gateway-routes",
+      "name": "Sample Gateway Routes",
+      "kind": "Tool",
+      "description": "A made-up viewer for routes on a pretend identity-aware gateway.",
+      "tags": [
+        "pinggateway"
+      ],
+      "url": "http://sample-gateway-routes.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-gateway-routes/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-gateway-claims",
+      "name": "Sample Claims Gateway",
+      "kind": "Demo",
+      "description": "A made-up gateway that checks claims before a sample tool call. Sits in two rows on purpose.",
+      "tags": [
+        "pinggateway",
+        "pingone-authorize",
+        "simulated"
+      ],
+      "url": "http://sample-gateway-claims.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-gateway-claims/",
+      "status": {
+        "state": "down",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-privilege-map",
+      "name": "Sample Privilege Map",
+      "kind": "Tool",
+      "description": "A made-up map of which sample agent holds which key, and what each key may call.",
+      "tags": [
+        "pingone-privilege",
+        "agent-identity"
+      ],
+      "url": "http://sample-privilege-map.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-privilege-map/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-privilege-gateway-lab",
+      "name": "Sample Privilege Gateway Lab",
+      "kind": "Demo",
+      "description": "A made-up lab that sends a sample agent call through a pretend privilege gateway.",
+      "tags": [
+        "simulated"
+      ],
+      "url": "http://sample-privilege-gateway-lab.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-privilege-gateway-lab/",
+      "pingProducts": [
+        {
+          "product": "privilege-gateway",
+          "state": "ready"
+        }
+      ],
+      "status": {
+        "state": "needs-setup",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-privilege-keys",
+      "name": "Sample Key Rotation",
+      "kind": "Tester",
+      "description": "A made-up tester that rotates a sample agent key and checks the old one stops working.",
+      "tags": [
+        "pingone-privilege"
+      ],
+      "url": "http://sample-privilege-keys.lab.example:7900",
+      "where": "installed",
+      "status": {
+        "state": "down",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-policy-tester",
+      "name": "Sample Policy Tester",
+      "kind": "Tester",
+      "description": "A made-up tester that asks a pretend policy engine who may call which sample tool.",
+      "tags": [
+        "pingone-authorize"
+      ],
+      "url": "http://sample-policy-tester.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-policy-tester/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-notes-pad",
+      "name": "Sample Notes Pad",
+      "kind": "Tool",
+      "description": "A made-up scratch pad that matches no row, so it lands under More apps.",
+      "tags": [
+        "learning"
+      ],
+      "url": "http://sample-notes-pad.lab.example:7900",
+      "where": "installed",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-risk-signals",
+      "name": "Sample Risk Signals",
+      "kind": "Demo",
+      "description": "A made-up walk-through of risk signals on a sign-in: a pretend score decides whether a sample agent is let through or asked for more.",
+      "tags": [
+        "pingone-protect",
+        "simulated"
+      ],
+      "url": "http://sample-risk-signals.lab.example:7900",
+      "where": "installed",
+      "proxyUrl": "https://launcher.example:8443/sample-risk-signals/",
+      "status": {
+        "state": "ready",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-risk-tester",
+      "name": "Sample Risk Tester",
+      "kind": "Tester",
+      "description": "A made-up tester that feeds a pretend risk engine good and bad sample sign-ins and checks the verdicts.",
+      "tags": [
+        "pingone-protect"
+      ],
+      "url": "http://sample-risk-tester.lab.example:7900",
+      "where": "installed",
+      "status": {
+        "state": "down",
+        "runtime": "offline"
+      }
+    },
+    {
+      "id": "sample-unrelated-viewer",
+      "name": "Sample Unrelated Viewer",
+      "kind": "Demo",
+      "description": "A made-up viewer with no Ping product at all, also under More apps.",
+      "tags": [
+        "simulated"
+      ],
+      "url": "http://sample-unrelated-viewer.lab.example:7900",
+      "where": "installed"
+    }
+  ]
+}

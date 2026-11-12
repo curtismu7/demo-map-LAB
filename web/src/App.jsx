@@ -1,5 +1,5 @@
 import React from "react";
-import { getMap, getJson, setMode } from "./api";
+import { getMap, getJson, postReset, setMode } from "./api";
 import { applyTheme, savedTheme } from "./theme";
 import { filterRows } from "./lib/filter.js";
 import ShelfLink from "./components/ShelfLink.jsx";
@@ -41,6 +41,13 @@ export default function App() {
     if (!r.ok) setSwitchError(r.body?.detail || `Could not switch (HTTP ${r.status}).`);
     setEpoch((e) => e + 1);
   }
+  // Reset (rule 3): the server is back to its launch mode; the data reloads with the epoch bump.
+  async function resetLab() {
+    setSwitchError("");
+    const r = await postReset();
+    if (!r.ok) setSwitchError(r.body?.detail || `Could not reset (HTTP ${r.status}).`);
+    setEpoch((e) => e + 1);
+  }
 
   const realHint = info && !info.realAvailable ? info.realReason || "Real is not configured. Mock keeps working." : "";
   const banner = info === undefined ? "Loading..." : info === null ? BANNER.unknown : real ? BANNER.real : BANNER.mock;
@@ -61,6 +68,7 @@ export default function App() {
             talkTrack={{ active: showTalk, onToggle: () => setShowTalk((v) => !v) }}
             help={{ href: "https://github.com/curtismu7/demo-map-LAB#readme" }}
             version={info?.version || null}
+            onReset={resetLab}
           >
             <ShelfLink />
           </TopMenu>

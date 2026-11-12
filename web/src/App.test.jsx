@@ -40,9 +40,9 @@ describe("Mock", () => {
     expect(screen.getByTestId("banner").nextElementSibling.tagName).toBe("H1");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Demo Map");
     expect(screen.getByTestId("mode").textContent).toBe("Mock");
-    expect(screen.getByTestId("mode-mock")).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByTestId("mode-real")).toBeDisabled();
-    expect(screen.getByTestId("mode-real").title).toMatch(/AI_DEMO2_URL/);
+    expect(screen.getByTestId("mode-select")).toHaveValue("mock");
+    expect(screen.getByTestId("mode-select").querySelector('option[value="real"]')).toBeDisabled();
+    expect(screen.getByTestId("mode-select").querySelector('option[value="real"]').title).toMatch(/AI_DEMO2_URL/);
     expect(screen.getByTestId("real-hint").textContent).toMatch(/AI_DEMO2_URL is not set/);
     const titles = rowTitles();
     expect(titles).toHaveLength(9);
@@ -145,9 +145,9 @@ describe("Mock", () => {
     lab = await startLab();
     render(<App />);
     await screen.findByTestId("rows");
-    fireEvent.change(screen.getByTestId("theme"), { target: { value: "dark" } });
+    fireEvent.change(screen.getByTestId("theme-select"), { target: { value: "dark" } });
     expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
-    fireEvent.change(screen.getByTestId("theme"), { target: { value: "light" } });
+    fireEvent.change(screen.getByTestId("theme-select"), { target: { value: "light" } });
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
   });
 
@@ -166,13 +166,13 @@ describe("Real", () => {
     render(<App />);
     await screen.findByTestId("rows");
     expect(screen.getByTestId("mode").textContent).toBe("Mock");
-    expect(screen.getByTestId("mode-real")).not.toBeDisabled();
-    click(screen.getByTestId("mode-real"));
+    expect(screen.getByTestId("mode-select").querySelector('option[value="real"]')).toBeEnabled();
+    fireEvent.change(screen.getByTestId("mode-select"), { target: { value: "real" } });
     await waitFor(() => expect(screen.getByTestId("mode").textContent).toBe("Real"));
     await screen.findByTestId("app-fx-worker-demo-y");
     expect(screen.getByTestId("banner").textContent).toBe(BANNER.real);
     expect(screen.getByTestId("banner")).toHaveAttribute("data-state", "live");
-    expect(screen.getByTestId("mode-real")).toHaveAttribute("aria-pressed", "true");
+    
     expect(within(screen.getByTestId("app-fx-personal-agent-demo-x")).getByTestId("running").textContent).toMatch(/Running$/);
     expect(within(screen.getByTestId("app-fx-worker-demo-y")).getByTestId("running").textContent).toMatch(/Not running$/);
     expect(screen.queryByTestId("app-sample-personal-agent-demo")).toBeNull();
@@ -181,7 +181,7 @@ describe("Real", () => {
     expect(rowTitles()).toEqual(["Personal Agent demo", "Digital Worker agent", "PingOne", "PingFederate", "PingGateway", "PingOne Privilege", "PingOne Authorize", "PingOne Protect"]);
     expect(screen.getByTestId("empty-pingone").textContent).toMatch(/No standalone app/);
     expect(screen.getByTestId("count-personal-agent").textContent).toBe("1 app");
-    click(screen.getByTestId("mode-mock"));
+    fireEvent.change(screen.getByTestId("mode-select"), { target: { value: "mock" } });
     await screen.findByTestId("app-sample-personal-agent-demo");
     expect(screen.getByTestId("mode").textContent).toBe("Mock");
     expect(screen.getByTestId("banner").textContent).toBe(BANNER.mock);
@@ -223,7 +223,7 @@ describe("Real", () => {
     expect(screen.getByTestId("banner").textContent).toBe(BANNER.real);
     expect(screen.queryByTestId("rows")).toBeNull();
     expect(screen.queryAllByTestId(/^app-/)).toHaveLength(0);
-    click(screen.getByTestId("mode-mock"));
+    fireEvent.change(screen.getByTestId("mode-select"), { target: { value: "mock" } });
     await screen.findByTestId("rows");
     expect(screen.queryByTestId("map-error")).toBeNull();
     expect(screen.getByTestId("mode").textContent).toBe("Mock");

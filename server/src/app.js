@@ -46,6 +46,7 @@ export function createApp({ health = createHealth(), env = process.env, useSetti
   api.get('/info', (_req, res) => {
     const c = cfg(); const cur = current();
     res.json({
+      version: (() => { try { return JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url), 'utf8')).version || null; } catch { return null; } })(),
       source: cur.source, mode: cur.source, simulated: cur.source === 'mock', realAvailable: c.ok, realReason: c.ok ? null : c.problem,
       limits: { rows: ROW_LIMITS.maxRows, shelfBytes: SHELF_LIMITS.maxBytes, shelfSeconds: SHELF_LIMITS.timeoutMs / 1000 },
       contentLabel: cur.source === 'real' ? 'the apps on your local demo shelf (read-only, loopback only)' : 'the made-up sample shelf shipped in this repo (data/sample-shelf.json)',

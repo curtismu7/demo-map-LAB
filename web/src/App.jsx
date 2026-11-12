@@ -1,8 +1,9 @@
 import React from "react";
 import { getMap, getJson, setMode } from "./api";
-import { THEMES, applyTheme, savedTheme } from "./theme";
+import { applyTheme, savedTheme } from "./theme";
 import { filterRows } from "./lib/filter.js";
 import ShelfLink from "./components/ShelfLink.jsx";
+import TopMenu from "./top-menu/TopMenu";
 import Row from "./components/Row.jsx";
 import { isRowOpen } from "./lib/rowOpen.js";
 
@@ -52,20 +53,14 @@ export default function App() {
         <span className="shell-brand"><span className="shell-logo" aria-hidden="true">DM</span> Demo Map <span className="shell-badge" data-testid="mode">{info ? (real ? "Real" : "Mock") : "..."}</span></span>
         <span className="shell-spacer" />
         <span className="shell-right">
-          {info && (
-            <span className="seg" role="group" aria-label="Data source">
-              <button type="button" aria-pressed={!real} data-testid="mode-mock" onClick={() => switchTo("mock")} title="Show the made-up sample shelf shipped in this repo">Mock</button>
-              <button type="button" aria-pressed={real} data-testid="mode-real" disabled={!info.realAvailable && !real} aria-describedby={realHint ? "real-hint" : undefined}
-                title={info.realAvailable ? "Show the apps on your local demo shelf (read-only, loopback only)" : realHint}
-                onClick={() => switchTo("real")}>Real</button>
-            </span>
-          )}
-          <ShelfLink />
-          <label className="shell-theme">Theme
-            <select value={theme} onChange={(e) => setTheme(e.target.value)} data-testid="theme">
-              {THEMES.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </label>
+          <TopMenu
+            mode={{ value: real ? "real" : "mock", onChange: switchTo, realAvailable: info ? !!info.realAvailable : null, realHint: realHint }}
+            theme={{ value: theme, onChange: setTheme }}
+            help={{ href: "https://github.com/curtismu7/demo-map-LAB#readme" }}
+            version={info?.version || null}
+          >
+            <ShelfLink />
+          </TopMenu>
         </span>
       </header>
       <main className="page" id="main" tabIndex={-1}>

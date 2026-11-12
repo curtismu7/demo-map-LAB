@@ -5,6 +5,7 @@ import { filterRows } from "./lib/filter.js";
 import ShelfLink from "./components/ShelfLink.jsx";
 import TopMenu from "./top-menu/TopMenu";
 import Row from "./components/Row.jsx";
+import TalkTrackSection from "./components/TalkTrackSection.jsx";
 import { isRowOpen } from "./lib/rowOpen.js";
 
 export const BANNER = {
@@ -22,6 +23,7 @@ export default function App() {
   const [theme, setTheme] = React.useState(savedTheme);
   const [query, setQuery] = React.useState("");
   const [closed, setClosed] = React.useState({});    // row id -> true when collapsed, false when opened; unset = the default (isRowOpen)
+  const [showTalk, setShowTalk] = React.useState(false);
 
   React.useEffect(() => { applyTheme(theme); }, [theme]);
   React.useEffect(() => {
@@ -56,6 +58,7 @@ export default function App() {
           <TopMenu
             mode={{ value: real ? "real" : "mock", onChange: switchTo, realAvailable: info ? !!info.realAvailable : null, realHint: realHint }}
             theme={{ value: theme, onChange: setTheme }}
+            talkTrack={{ active: showTalk, onToggle: () => setShowTalk((v) => !v) }}
             help={{ href: "https://github.com/curtismu7/demo-map-LAB#readme" }}
             version={info?.version || null}
           >
@@ -81,6 +84,7 @@ export default function App() {
         </div>
         {map && <p className="meta" data-testid="stamp">{map.counts.apps} apps, {map.counts.matched} placed in {map.counts.rows - (map.counts.unmatched ? 1 : 0)} rows, {map.counts.unmatched} under More apps, {map.counts.running} running{map.generatedAt ? `. Shelf data from ${map.generatedAt}.` : "."}</p>}
         {map?.warnings?.map((w) => <p key={w} className="notice" data-testid="warning">{w}</p>)}
+        {showTalk && <TalkTrackSection />}
         {map === null ? (
           <div className="field-error" role="alert" data-testid="map-error">
             {mapError?.message || "The map could not be loaded."} Nothing is shown.

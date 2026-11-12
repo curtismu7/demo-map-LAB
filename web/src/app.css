@@ -75,3 +75,6 @@ button[aria-pressed="true"]:hover:not(:disabled), button[aria-selected="true"]:h
 .pagelinks li { font-size: 0.85rem; overflow-wrap: anywhere; }
 .pagelinks a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 @media (max-width: 600px) { .shell-bar { gap: 0.5rem; padding: 0.5rem 1rem; } .page-title { font-size: 1.35rem; } }
+
+.talk { max-width: 52rem; }
+.talk__step { padding-left: 8px; border-left: 3px solid var(--accent); }

@@ -3,6 +3,7 @@ import { getMap, getJson, postReset, setMode } from "./api";
 import { applyTheme, savedTheme } from "./theme";
 import { filterRows } from "./lib/filter.js";
 import ShelfLink from "./components/ShelfLink.jsx";
+import VerifyMark from "./components/VerifyMark.jsx";
 import TopMenu from "./top-menu/TopMenu";
 import Row from "./components/Row.jsx";
 import TalkTrackSection from "./components/TalkTrackSection.jsx";
@@ -71,6 +72,7 @@ export default function App() {
             onReset={resetLab}
           >
             <ShelfLink />
+            <VerifyMark id="demo-map-lab" />
           </TopMenu>
         </span>
       </header>

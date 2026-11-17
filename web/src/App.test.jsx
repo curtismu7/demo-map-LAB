@@ -42,8 +42,8 @@ describe("Mock", () => {
     expect(screen.getByTestId("mode").textContent).toBe("Mock");
     expect(screen.getByTestId("mode-select")).toHaveValue("mock");
     expect(screen.getByTestId("mode-select").querySelector('option[value="real"]')).toBeDisabled();
-    expect(screen.getByTestId("mode-select").querySelector('option[value="real"]').title).toMatch(/AI_DEMO2_URL/);
-    expect(screen.getByTestId("real-hint").textContent).toMatch(/AI_DEMO2_URL is not set/);
+    expect(screen.getByTestId("mode-select").querySelector('option[value="real"]').title).toMatch(/SHELF_URL/);
+    expect(screen.getByTestId("real-hint").textContent).toMatch(/SHELF_URL is not set/);
     const titles = rowTitles();
     expect(titles).toHaveLength(9);
     expect(titles).toContain("PingOne Protect");

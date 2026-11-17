@@ -13,7 +13,7 @@ This app is scaffolded from env-map-LAB: the server safety modules (Host check, 
 | | Mock | Real (owner-run) |
 | --- | --- | --- |
 | What it shows | A **made-up** sample shelf, `data/sample-shelf.json`: 18 invented apps on `.example` hosts. | The apps on **your local demo shelf**, read live and read-only from `GET <SHELF_URL>/api/shelf`. |
-| AI-DEMO2 page links | Built on the placeholder `https://ai-demo2.example`. | Built on `AI_DEMO2_URL` from your `.env`. |
+| Row page links | Built on the placeholder `https://ai-demo2.example`. | Built on `LINK_BASE_URL` from your `.env` (optional: unset, the map shows apps only). The older `AI_DEMO2_URL` name is still read. |
 | Where | Host or Docker. | Host only (`./scripts/run.sh`). Refused in the Docker image: its bind is not loopback and a container cannot reach the host's loopback shelf. |
 | Network | None. | One request per page load, to the one loopback origin in `SHELF_URL` (http only, 127.0.0.1 / localhost / [::1]; no redirects, 5 s, 2 MB, JSON only). Nothing else. |
 
@@ -25,7 +25,7 @@ Copy `.env.example` to `.env` beside `docker-compose.yml` (gitignored; never com
 
 | Name | Meaning |
 | --- | --- |
-| `AI_DEMO2_URL` | The AI-DEMO2 site, a plain `http(s)` origin: no path, no credentials. Required for Real. |
+| `LINK_BASE_URL` | The origin the row page links are built on, a plain `http(s)` origin: no path, no credentials. Optional: unset, the map shows apps only. The older `AI_DEMO2_URL` name is read as a fallback. |
 | `SHELF_URL` | The local demo shelf, an `http` loopback origin. Default `http://127.0.0.1:4400`. |
 
 Then start the shelf and run `./scripts/run.sh`. Settings come only from this app's own `.env` or the environment (the environment wins).
@@ -40,7 +40,7 @@ An app belongs to a row when, case-insensitively, **any** of these holds:
 - one of its tags is in `match.tags`;
 - one of its Ping products is in `match.pingProducts`.
 
-An app can appear in several rows. Apps that match no row go under a final **More apps** row. A page link is `AI_DEMO2_URL` + the row's path.
+An app can appear in several rows. Apps that match no row go under a final **More apps** row. A page link is `LINK_BASE_URL` + the row's path; with no link base set, rows show apps only.
 
 ## The page
 

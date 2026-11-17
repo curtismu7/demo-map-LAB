@@ -7,9 +7,10 @@ export const MORE_ROW = { id: MORE_ID, title: 'More apps', summary: 'Apps on the
 // -> { rows: [{ id, title, summary, count, apps, pages: [{ label, href }] }], counts }
 export function buildMap(rows, apps, aiDemo2Base) {
   const { rows: matched, unmatched } = matchRows(rows, apps);
+  // A null base (no link origin configured) means apps only: the rows carry no page links.
   const out = matched.map((r) => ({
     id: r.id, title: r.title, summary: r.summary, count: r.apps.length, apps: r.apps,
-    pages: r.pages.map((p) => ({ label: p.label, href: pageHref(aiDemo2Base, p.path) })),
+    pages: aiDemo2Base ? r.pages.map((p) => ({ label: p.label, href: pageHref(aiDemo2Base, p.path) })) : [],
   }));
   if (unmatched.length) out.push({ ...MORE_ROW, count: unmatched.length, apps: unmatched, pages: [] });
   const placed = new Set(matched.flatMap((r) => r.apps.map((a) => a.id)));

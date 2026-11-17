@@ -6,7 +6,7 @@ import { ROWS_FILE } from '../src/source.js';
 import { closedPort, demo, get, getJson, post, rawHttp, rm, sendJson, shelfDoc, tempDir, withFakeShelf, withServer } from './helpers.js';
 
 const CANARY = 'CANARY-5be0';
-const realEnv = (origin, extra = {}) => ({ AI_DEMO2_URL: 'https://ai-demo2.example', SHELF_URL: origin, ...extra });
+const realEnv = (origin, extra = {}) => ({ SHELF_URL: origin, LINK_BASE_URL: 'https://ai-demo2.example', ...extra });
 
 test('GET /api/health is demo-health/1, GET only, no extra fields', async () => {
   await withServer(async (url) => {
@@ -39,7 +39,7 @@ test('GET /api/info in Mock: mode, source, realAvailable false with a reason tha
     assert.equal(i.source, 'mock');
     assert.equal(i.simulated, true);
     assert.equal(i.realAvailable, false);
-    assert.match(i.realReason, /AI_DEMO2_URL is not set/);
+    assert.match(i.realReason, /SHELF_URL is not set/);
     assert.match(i.contentLabel, /made-up sample shelf/);
   });
 });
@@ -72,11 +72,11 @@ test('GET /api/map in Mock: the rows from data/rows.json plus More apps, built f
   });
 });
 
-test('Mock ignores AI_DEMO2_URL: the page links keep the placeholder base', async () => {
+test('Mock ignores LINK_BASE_URL: the page links keep the placeholder base', async () => {
   await withServer(async (url) => {
     const m = await getJson(url, '/api/map');
     assert.equal(m.aiDemo2Base, 'https://ai-demo2.example');
-  }, { env: { AI_DEMO2_URL: 'https://other.example', MODE: 'mock' } });
+  }, { env: { LINK_BASE_URL: 'https://other.example', MODE: 'mock' } });
 });
 
 test('GET /api/map reports a rows file that does not validate (422, positions only)', async () => {
@@ -117,12 +117,12 @@ test('the mode switch: both directions, 409 when Real is not configured, exact b
     assert.equal(r.status, 409);
     const j = await r.json();
     assert.equal(j.error, 'real_not_configured');
-    assert.match(j.detail, /AI_DEMO2_URL/);
+    assert.match(j.detail, /SHELF_URL/);
     assert.equal((await getJson(url, '/api/info')).source, 'mock');
   });
 });
 
-test('Real: apps come from the local shelf, the page links use AI_DEMO2_URL, unsafe links are dropped, the shelf is asked once per map', async () => {
+test('Real: apps come from the local shelf, the page links use LINK_BASE_URL, unsafe links are dropped, the shelf is asked once per map', async () => {
   const shelf = shelfDoc([
     demo('sample-personal-agent-demo', { status: { state: 'ready' }, proxyUrl: 'https://launcher.example:8443/p/' }),
     demo('hostile', { name: '<img src=x onerror=alert(1)>', description: '<script>alert(1)</script>', tags: ['pingone'], url: 'javascript:alert(1)' }),
@@ -148,7 +148,7 @@ test('Real: apps come from the local shelf, the page links use AI_DEMO2_URL, uns
       assert.match(m.warnings.join(' '), /1 shelf entry was skipped/);
       assert.match(m.warnings.join(' '), /no usable Open link/);
       assert.ok(!JSON.stringify(m.warnings).includes('Nope'));
-    }, { env: realEnv(origin, { AI_DEMO2_URL: 'https://real-ai-demo2.example' }) });
+    }, { env: { SHELF_URL: origin, LINK_BASE_URL: 'https://real-ai-demo2.example' } });
   });
 });
 
@@ -189,7 +189,7 @@ test('Real with a non-loopback SHELF_URL is not available: the toggle is refused
       assert.match(i.realReason, /SHELF_URL .*loopback/);
       assert.equal((await post(url, '/api/mode', { source: 'real' })).status, 409);
       assert.equal((await getJson(url, '/api/map')).source, 'mock');
-    }, { env: { AI_DEMO2_URL: 'https://ai-demo2.example', SHELF_URL: 'http://shelf.example:4400' } });
+    }, { env: { SHELF_URL: 'http://shelf.example:4400' } });
     assert.deepEqual(guard.attempts, []);
   } finally { guard.restore(); }
 });
@@ -199,7 +199,7 @@ test('Real that loses its setting falls back to Mock instead of serving nothing'
     const env = realEnv(origin);
     await withServer(async (url) => {
       assert.equal((await getJson(url, '/api/map')).source, 'real');
-      delete env.AI_DEMO2_URL;
+      delete env.SHELF_URL;
       const m = await getJson(url, '/api/map');
       assert.equal(m.source, 'mock');
     }, { env });

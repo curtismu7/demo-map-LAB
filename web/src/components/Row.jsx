@@ -4,7 +4,7 @@ import { isWebLink } from "../lib/filter.js";
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 
-// One row of the map: a collapsible section (open by default; collapsed when it has more than LARGE_ROW apps, see lib/rowOpen.js) with its app cards and its AI-DEMO2 page links.
+// One row of the map: a collapsible section (open by default; collapsed when it has more than LARGE_ROW apps, see lib/rowOpen.js) with its app cards and its page links.
 export default function Row({ row, open, onToggle, filtering }) {
   const bodyId = `row-body-${row.id}`;
   const apps = row.shown;
@@ -26,9 +26,9 @@ export default function Row({ row, open, onToggle, filtering }) {
           : <p className="muted" data-testid={`empty-${row.id}`}>{row.apps.length === 0 ? "No standalone app on the shelf belongs here yet." : "No app here matches the filter."}</p>}
         {row.pages.length > 0 && (
           <div className="pages">
-            <h3 className="pages__title">AI-DEMO2 pages</h3>
+            <h3 className="pages__title">Pages</h3>
             {pages.length > 0
-              ? <ul className="pagelinks" aria-label={`${row.title} AI-DEMO2 pages`}>
+              ? <ul className="pagelinks" aria-label={`${row.title} pages`}>
                 {pages.map((p) => <li key={p.href}>{isWebLink(p.href) ? <a href={p.href} target="_blank" rel="noopener noreferrer">{p.label}</a> : <span>{p.label}</span>}</li>)}
               </ul>
               : <p className="muted">No page here matches the filter.</p>}

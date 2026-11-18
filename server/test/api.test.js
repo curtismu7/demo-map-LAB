@@ -152,6 +152,22 @@ test('Real: apps come from the local shelf, the page links use LINK_BASE_URL, un
   });
 });
 
+test('Real needs only the shelf: with no link base there is no AI-DEMO2 (or any) default, the apps show and the rows carry no page links', async () => {
+  const shelf = shelfDoc([demo('sample-personal-agent-demo', { status: { state: 'ready' } })]);
+  await withFakeShelf(sendJson(shelf), async (origin) => {
+    await withServer(async (url) => {
+      const i = await getJson(url, '/api/info');
+      assert.equal(i.source, 'real'); assert.equal(i.realAvailable, true);
+      const m = await getJson(url, '/api/map');
+      assert.equal(m.source, 'real');
+      assert.equal(m.aiDemo2Base, null, 'no link base, no default');
+      assert.ok(m.rows[0].apps.length > 0, 'the shelf apps are shown');
+      for (const r of m.rows) assert.deepEqual(r.pages, [], `${r.id} has no page links`);
+      assert.ok(!JSON.stringify(m).includes('ai-demo2'), 'nothing named after AI-DEMO2 reaches the page data');
+    }, { env: { SHELF_URL: origin } });
+  });
+});
+
 test('Real with the shelf unreachable: a clear 502 message, no rows, and never the Mock data as if it were Real', async () => {
   const port = await closedPort();
   await withServer(async (url) => {

@@ -13,7 +13,7 @@ What Demo Map does to stay safe, and the test that pins each part.
 | Hostile row definitions | `data/rows.json` is parsed the same way (64 KB, depth 8, 30 rows, 40 pages a row, 100 match entries); page paths must be one `/`-rooted path | `server/test/rows.test.js` |
 | Script or markup in a name or description | All text is rendered as React text; no `innerHTML`; strict CSP (`script-src 'self'`) | `web/src/App.test.jsx` (hostile shelf), `scripts/repo.test.mjs` |
 | A `javascript:` or `data:` Open link | Only plain `http(s)` URLs without credentials survive the server check, and the UI checks again; links carry `rel="noopener noreferrer"` and open in a new tab | `server/test/shelf.test.js` (safeLink), `web/src/App.test.jsx`, `web/src/lib/filter.test.js` |
-| A bad AI-DEMO2 base | `AI_DEMO2_URL` must be a plain `http(s)` origin: no path, query, fragment or credentials | `server/test/baseUrl.test.js` |
+| A bad link base | `LINK_BASE_URL` must be a plain `http(s)` origin: no path, query, fragment or credentials | `server/test/baseUrl.test.js` |
 | Outbound calls | Netguard refuses every non-loopback socket, DNS lookup, fetch and UDP send; Mock makes no call at all; no CDN, no web font | `server/test/netguard.test.js`, the zero-attempt tests in `server/test/api.test.js` and `web/src/App.test.jsx`, `scripts/repo.test.mjs` |
 | Settings leaking | Settings come from this app's own `.env` (gitignored) or the environment; hints never echo a value; nothing fetched is logged | `server/test/config.test.js`, `server/test/api.test.js` |
 | Unsanitized sample | The doctor and tests reject non-reserved hosts, UUIDs and e-mail addresses in `data/sample-shelf.json` and `data/rows.json` | `server/test/safety.test.js` |

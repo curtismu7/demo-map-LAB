@@ -11,7 +11,7 @@ import { isRowOpen } from "./lib/rowOpen.js";
 
 export const BANNER = {
   mock: "Mock: a made-up sample shelf (invented apps on .example hosts). Nothing is read from your demo shelf and nothing is fetched from the network. The AI-DEMO2 page links point at a placeholder address.",
-  real: "Real: the apps on your local demo shelf, read live and read-only from this machine, with AI-DEMO2 page links built on your AI_DEMO2_URL. Running and not-running come from the shelf itself.",
+  real: "Real: the apps on your local demo shelf, read live and read-only from this machine, with page links built on your LINK_BASE_URL (none if it is unset). Running and not-running come from the shelf itself.",
   unknown: "Mode unknown: the server did not answer. Nothing is shown until it does.",
 };
 

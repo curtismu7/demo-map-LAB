@@ -26,7 +26,7 @@ Copy `.env.example` to `.env` beside `docker-compose.yml` (gitignored; never com
 | Name | Meaning |
 | --- | --- |
 | `LINK_BASE_URL` | The origin the row page links are built on, a plain `http(s)` origin: no path, no credentials. Optional: unset, the map shows apps only. The older `AI_DEMO2_URL` name is read as a fallback. |
-| `SHELF_URL` | The local demo shelf, an `http` loopback origin. Default `http://127.0.0.1:4400`. |
+| `SHELF_URL` | **Required for Real.** The local demo shelf (demo-shelf-LAB), an `http` loopback origin. There is no implicit default, so a clean clone stays in Mock; demo-shelf-LAB publishes `http://127.0.0.1:4400` unless you moved it. This is the list of standalone labs Real shows. |
 
 Then start the shelf and run `./scripts/run.sh`. Settings come only from this app's own `.env` or the environment (the environment wins).
 

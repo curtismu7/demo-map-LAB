@@ -2,7 +2,7 @@
 // docker-compose.yml (owner rule 2026-11-09; never ~/Documents or a shared file). The environment wins. The .env is gitignored.
 //   LINK_BASE_URL the origin the row page links are built on (a plain http(s) origin). OPTIONAL: without it the map
 //                 shows apps only and the rows carry no page links. Set it to point at the site that hosts those pages.
-//   SHELF_URL     the local demo shelf Real reads (a loopback http origin). Default http://127.0.0.1:4400.
+//   SHELF_URL     the local demo shelf Real reads (a loopback http origin). REQUIRED for Real: no implicit default (demo-shelf-LAB's own port is 4400).
 // Real is refused off a loopback bind (the Docker image: a container cannot reach the host's loopback shelf, and Docker is Mock only).
 // Hints never echo a setting's value.
 import fs from 'node:fs';
@@ -70,7 +70,7 @@ export const realAvailableFrom = (env = process.env, opts) => realConfig(env, op
 export function modeFrom(env = process.env, opts) {
   if (env.MODE === undefined || env.MODE === '') return realAvailableFrom(env, opts) ? 'real' : 'mock';
   if (env.MODE !== 'mock' && env.MODE !== 'real') throw new Error(`MODE=${String(env.MODE).slice(0, 20)} is not available: this app has mock and real modes`);
-  if (env.MODE === 'real' && !realAvailableFrom(env, opts)) throw new Error('MODE=real requested but Real is not configured (AI_DEMO2_URL / SHELF_URL)');
+  if (env.MODE === 'real' && !realAvailableFrom(env, opts)) throw new Error('MODE=real requested but Real is not configured (SHELF_URL)');
   return env.MODE;
 }
 

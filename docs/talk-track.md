@@ -8,6 +8,6 @@ Two minutes, Mock mode (the made-up sample). Say first: "this is a sample; none 
 4. **One app, two rows.** "The claims gateway sits under PingGateway and PingOne Authorize: it uses both, so it shows in both."
 5. **More apps.** "Anything that matches no row lands at the bottom, so nothing on the shelf is hidden."
 6. **Filter and collapse.** "Type part of a name or a description. Collapse a row you are not presenting; the count stays."
-7. **Real, if you own it.** "Real reads your own local demo shelf, read-only, and builds the page links on your AI-DEMO2 address. It names your real apps, so do not share that screen."
+7. **Real, if you own it.** "Real reads your own local demo shelf, read-only, and builds the page links on the link base you set, if any. It names your real apps, so do not share that screen."
 
 If asked "who decides what goes in a row?" - `data/rows.json`: ids, tags and Ping products per row. Edit it and reload.

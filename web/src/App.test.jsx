@@ -160,9 +160,9 @@ describe("Mock", () => {
 });
 
 describe("Real", () => {
-  it("the toggle switches both ways and reloads: Real shows the shelf's apps and the AI_DEMO2_URL page links, Mock the sample", async () => {
+  it("the toggle switches both ways and reloads: Real shows the shelf's apps and the LINK_BASE_URL page links, Mock the sample", async () => {
     const origin = await fakeShelf({ schema: "demo-shelf/1", generatedAt: "2026-11-10T09:00:00Z", demos: [demo("fx-personal-agent-demo-x", { name: "Fx Person", status: { state: "ready" } }), demo("fx-worker-demo-y", { name: "Fx Worker", kind: "Tool", status: { state: "down" } })] });
-    lab = await startLab({ env: { AI_DEMO2_URL: REAL_BASE, SHELF_URL: origin, MODE: "mock" } });
+    lab = await startLab({ env: { LINK_BASE_URL: REAL_BASE, SHELF_URL: origin, MODE: "mock" } });
     render(<App />);
     await screen.findByTestId("rows");
     expect(screen.getByTestId("mode").textContent).toBe("Mock");
@@ -195,7 +195,7 @@ describe("Real", () => {
       demo("hx-two-worker-demo", { name: "Safe", url: "https://safe.example/a?x=<b>", description: "x" }),
       demo("hx-bad", { kind: "<b>Evil</b>" }),
     ] });
-    lab = await startLab({ env: { AI_DEMO2_URL: REAL_BASE, SHELF_URL: origin } });
+    lab = await startLab({ env: { LINK_BASE_URL: REAL_BASE, SHELF_URL: origin } });
     render(<App />);
     const card = await screen.findByTestId("app-hx-worker-demo");
     expect(card.textContent).toContain("<img src=x onerror=alert(1)>");
@@ -214,7 +214,7 @@ describe("Real", () => {
   });
 
   it("the shelf not answering shows a clear message and no rows; nothing from Mock is shown as Real; Mock still works", async () => {
-    lab = await startLab({ env: { AI_DEMO2_URL: REAL_BASE, SHELF_URL: await closedOrigin() } });
+    lab = await startLab({ env: { LINK_BASE_URL: REAL_BASE, SHELF_URL: await closedOrigin() } });
     render(<App />);
     const err = await screen.findByTestId("map-error");
     expect(err.textContent).toMatch(/local demo shelf did not answer/);
@@ -231,7 +231,7 @@ describe("Real", () => {
 
   it("a shelf answer that is not the expected format shows a fixed message, not the fetched text", async () => {
     const origin = await fakeShelf({ schema: "CANARY-text-from-shelf", demos: [] });
-    lab = await startLab({ env: { AI_DEMO2_URL: REAL_BASE, SHELF_URL: origin } });
+    lab = await startLab({ env: { LINK_BASE_URL: REAL_BASE, SHELF_URL: origin } });
     render(<App />);
     const err = await screen.findByTestId("map-error");
     expect(err.textContent).toMatch(/does not look like the demo-shelf\/1 format/);

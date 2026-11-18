@@ -17,7 +17,7 @@ export async function runChecks({ env = process.env, mockFile = MOCK_FILE, rowsF
 
   const cfg = realConfig(env);
   try { add('mode', 'pass', `mode=${modeFrom(env)}${cfg.ok ? ' (Real configured)' : ' (Mock only)'}`); } catch (e) { add('mode', 'fail', e.message); }
-  add('real-settings', 'info', cfg.ok ? 'Real is configured: AI_DEMO2_URL is a plain origin and the shelf is on loopback (values not shown)' : cfg.problem);
+  add('real-settings', 'info', cfg.ok ? 'Real is configured: SHELF_URL is a loopback origin and LINK_BASE_URL, if set, is a plain origin (values not shown)' : cfg.problem);
 
   try { add('bind', 'pass', `${assertBindAllowed(bindHost(env), env)}${env.DEMO_MAP_BIND ? ' (DEMO_MAP_BIND opt-in; Real is off)' : ' (loopback)'}`); } catch (e) { add('bind', 'fail', e.message); }
   const port = env.PORT === undefined || env.PORT === '' ? DEFAULT_PORT : Number(env.PORT);

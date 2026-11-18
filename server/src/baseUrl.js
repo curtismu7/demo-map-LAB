@@ -1,4 +1,4 @@
-// Origin validation for the two configured URLs: AI_DEMO2_URL (the base the page links are built on) and SHELF_URL (the one
+// Origin validation for the two configured URLs: LINK_BASE_URL (the base the page links are built on) and SHELF_URL (the one
 // local origin Real mode may contact). Plain origins only: no path, query, fragment or credentials. Problems never echo the value.
 import { isLoopbackHost } from './safety.js';
 
@@ -19,5 +19,5 @@ export function parseOrigin(value, { loopbackOnly = false } = {}) {
   return { ok: true, origin: u.origin };
 }
 
-// Build the AI-DEMO2 page link: the validated origin plus a path that rows.js already validated.
+// Build a row page link: the validated origin plus a path that rows.js already validated.
 export const pageHref = (origin, pagePath) => `${origin}${pagePath}`;

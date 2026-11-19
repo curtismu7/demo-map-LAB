@@ -47,9 +47,11 @@ button[aria-pressed="true"]:hover:not(:disabled), button[aria-selected="true"]:h
 .tw { display: inline-flex; align-items: baseline; gap: 6px; min-height: 0; padding: 4px 10px; font: inherit; font-weight: 700; text-align: left; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; overflow-wrap: anywhere; }
 .tw:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .count { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-body); background: var(--surface); white-space: nowrap; }
+.step-num { display: inline-grid; place-items: center; min-width: 1.4rem; height: 1.4rem; border-radius: 999px; background: var(--accent-gradient); color: var(--on-accent); font: 700 0.75rem var(--font-mono); margin-right: 0.5em; vertical-align: 2px; }
 
 /* Card grid with a 4px accent top edge */
-.card-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.card-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 900px) { .card-grid { grid-template-columns: 1fr; } }
 .app-card { border: 1px solid var(--border); border-top: 4px solid var(--accent); background: var(--surface); color: var(--text-body); border-radius: 8px; padding: 12px 14px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .app-card--tester { border-top-color: var(--status-info); }
 .app-card--tool { border-top-color: var(--status-ok); }

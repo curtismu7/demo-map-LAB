@@ -5,6 +5,8 @@ import { filterRows } from "./lib/filter.js";
 import ShelfLink from "./components/ShelfLink.jsx";
 import VerifyMark from "./components/VerifyMark.jsx";
 import TopMenu from "./top-menu/TopMenu";
+import HelpDialog from "./help-dialog/HelpDialog.jsx";
+import { HELP_SECTIONS } from "./helpContent";
 import Row from "./components/Row.jsx";
 import TalkTrackSection from "./components/TalkTrackSection.jsx";
 import { isRowOpen } from "./lib/rowOpen.js";
@@ -25,6 +27,7 @@ export default function App() {
   const [query, setQuery] = React.useState("");
   const [closed, setClosed] = React.useState({});    // row id -> true when collapsed, false when opened; unset = the default (isRowOpen)
   const [showTalk, setShowTalk] = React.useState(false);
+  const [helpOpen, setHelpOpen] = React.useState(false);
 
   React.useEffect(() => { applyTheme(theme); }, [theme]);
   React.useEffect(() => {
@@ -67,7 +70,7 @@ export default function App() {
             mode={{ value: real ? "real" : "mock", onChange: switchTo, realAvailable: info ? !!info.realAvailable : null, realHint: realHint }}
             theme={{ value: theme, onChange: setTheme }}
             talkTrack={{ active: showTalk, onToggle: () => setShowTalk((v) => !v) }}
-            help={{ href: "https://github.com/curtismu7/demo-map-LAB#readme" }}
+            help={{ onClick: () => setHelpOpen(true), title: "What this lab is, and what is simulated" }}
             version={info?.version || null}
             onReset={resetLab}
           >
@@ -95,6 +98,7 @@ export default function App() {
         {map && <p className="meta" data-testid="stamp">{map.counts.apps} apps, {map.counts.matched} placed in {map.counts.rows - (map.counts.unmatched ? 1 : 0)} rows, {map.counts.unmatched} under More apps, {map.counts.running} running{map.generatedAt ? `. Shelf data from ${map.generatedAt}.` : "."}</p>}
         {map?.warnings?.map((w) => <p key={w} className="notice" data-testid="warning">{w}</p>)}
         {showTalk && <TalkTrackSection />}
+        <HelpDialog isOpen={helpOpen} onClose={() => setHelpOpen(false)} sections={HELP_SECTIONS} docsUrl="https://github.com/curtismu7/demo-map-LAB#readme" />
         {map === null ? (
           <div className="field-error" role="alert" data-testid="map-error">
             {mapError?.message || "The map could not be loaded."} Nothing is shown.
